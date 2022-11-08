@@ -9,4 +9,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface MovieCharacterRepository extends JpaRepository<MovieCharacter, Long> {
     List<MovieCharacter> findAllByExternalIdIn(Set<Long> ids);
+
+    List<MovieCharacter> findAllByNameContains(String string);
 }

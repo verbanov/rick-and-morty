@@ -1,9 +1,10 @@
-package com.example.rickandmorty.mapper;
+package com.example.rickandmorty.model.dto.mapper;
 
 import com.example.rickandmorty.model.Gender;
 import com.example.rickandmorty.model.MovieCharacter;
 import com.example.rickandmorty.model.Status;
-import com.example.rickandmorty.model.dto.ApiCharacterDto;
+import com.example.rickandmorty.model.dto.MovieCharacterResponseDto;
+import com.example.rickandmorty.model.dto.external.ApiCharacterDto;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -15,5 +16,14 @@ public class MovieCharacterMapper {
         movieCharacter.setGender(Gender.valueOf(characterDto.getGender().toUpperCase()));
         movieCharacter.setStatus(Status.valueOf(characterDto.getStatus().toUpperCase()));
         return movieCharacter;
+    }
+
+    public MovieCharacterResponseDto modelToResponseDto(MovieCharacter movieCharacter) {
+        MovieCharacterResponseDto movieCharacterResponseDto = new MovieCharacterResponseDto();
+        movieCharacterResponseDto.setId(movieCharacter.getExternalId());
+        movieCharacterResponseDto.setName(movieCharacter.getName());
+        movieCharacterResponseDto.setGender(movieCharacter.getGender().name());
+        movieCharacterResponseDto.setStatus(movieCharacter.getStatus().name());
+        return movieCharacterResponseDto;
     }
 }

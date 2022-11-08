@@ -1,4 +1,4 @@
-package com.example.rickandmorty.model.dto;
+package com.example.rickandmorty.model.dto.external;
 
 import lombok.Data;
 

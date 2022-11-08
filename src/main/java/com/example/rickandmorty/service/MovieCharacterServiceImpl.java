@@ -1,9 +1,9 @@
 package com.example.rickandmorty.service;
 
-import com.example.rickandmorty.mapper.MovieCharacterMapper;
 import com.example.rickandmorty.model.MovieCharacter;
-import com.example.rickandmorty.model.dto.ApiCharacterDto;
-import com.example.rickandmorty.model.dto.ApiResponseDto;
+import com.example.rickandmorty.model.dto.external.ApiCharacterDto;
+import com.example.rickandmorty.model.dto.external.ApiResponseDto;
+import com.example.rickandmorty.model.dto.mapper.MovieCharacterMapper;
 import com.example.rickandmorty.repository.MovieCharacterRepository;
 import java.util.Arrays;
 import java.util.List;
@@ -11,12 +11,11 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 @Service
-public class MovieCharacterServiceImpl implements MovieCharacterService {
+public class  MovieCharacterServiceImpl implements MovieCharacterService {
     private static final String API_URL_CHARACTERS = "https://rickandmortyapi.com/api/character";
     private final MovieCharacterRepository repository;
     private final HttpClient httpClient;
@@ -28,6 +27,17 @@ public class MovieCharacterServiceImpl implements MovieCharacterService {
         this.repository = repository;
         this.httpClient = httpClient;
         this.movieCharacterMapper = movieCharacterMapper;
+    }
+
+    public MovieCharacter getRandomCharacter() {
+        long countOfCharacters = repository.count();
+        long randomId = (long) Math.floor(Math.random() * (countOfCharacters - 1 + 1) + 1);
+        return repository.findById(randomId).get();
+    }
+
+    @Override
+    public List<MovieCharacter> findAllByNameContains(String string) {
+        return repository.findAllByNameContains(string);
     }
 
     @Scheduled(cron = "0 */2 * * * *")
