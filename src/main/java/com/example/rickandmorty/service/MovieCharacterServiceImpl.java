@@ -1,9 +1,9 @@
 package com.example.rickandmorty.service;
 
 import com.example.rickandmorty.model.MovieCharacter;
-import com.example.rickandmorty.model.dto.external.ApiCharacterDto;
-import com.example.rickandmorty.model.dto.external.ApiResponseDto;
-import com.example.rickandmorty.model.dto.mapper.MovieCharacterMapper;
+import com.example.rickandmorty.dto.external.ApiCharacterDto;
+import com.example.rickandmorty.dto.external.ApiResponseDto;
+import com.example.rickandmorty.dto.mapper.MovieCharacterMapper;
 import com.example.rickandmorty.repository.MovieCharacterRepository;
 import java.util.Arrays;
 import java.util.List;

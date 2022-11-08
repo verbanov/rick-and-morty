@@ -1,10 +1,10 @@
-package com.example.rickandmorty.model.dto.mapper;
+package com.example.rickandmorty.dto.mapper;
 
+import com.example.rickandmorty.dto.MovieCharacterResponseDto;
+import com.example.rickandmorty.dto.external.ApiCharacterDto;
 import com.example.rickandmorty.model.Gender;
 import com.example.rickandmorty.model.MovieCharacter;
 import com.example.rickandmorty.model.Status;
-import com.example.rickandmorty.model.dto.MovieCharacterResponseDto;
-import com.example.rickandmorty.model.dto.external.ApiCharacterDto;
 import org.springframework.stereotype.Component;
 
 @Component

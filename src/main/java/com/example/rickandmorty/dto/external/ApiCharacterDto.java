@@ -1,9 +1,9 @@
-package com.example.rickandmorty.model.dto;
+package com.example.rickandmorty.dto.external;
 
 import lombok.Data;
 
 @Data
-public class MovieCharacterResponseDto {
+public class ApiCharacterDto {
     private Long id;
     private String name;
     private String status;
