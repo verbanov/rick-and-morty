@@ -1,7 +1,7 @@
 package com.example.rickandmorty.controller;
 
-import com.example.rickandmorty.dto.MovieCharacterResponseDto;
-import com.example.rickandmorty.dto.mapper.MovieCharacterMapper;
+import com.example.rickandmorty.model.dto.MovieCharacterResponseDto;
+import com.example.rickandmorty.model.dto.mapper.MovieCharacterMapper;
 import com.example.rickandmorty.service.MovieCharacterService;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("characters")
+@RequestMapping("/characters")
 public class MovieCharacterController {
     private final MovieCharacterService movieCharacterService;
     private final MovieCharacterMapper movieCharacterMapper;
