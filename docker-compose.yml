@@ -16,7 +16,7 @@ services:
   app:
     depends_on:
       - db
-    image: 'vverbanov/rick-and-morty'
+    image: 'verbanov/rick-and-morty'
     build: .
     env_file: ./.env
     ports:
