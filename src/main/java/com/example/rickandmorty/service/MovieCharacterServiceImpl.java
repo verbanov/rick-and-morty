@@ -40,7 +40,7 @@ public class MovieCharacterServiceImpl implements MovieCharacterService {
         return repository.findAllByNameContains(string);
     }
 
-    @Scheduled(cron = "* */1 * * * *")
+    @Scheduled(cron = "0 */1 * * * *")
     @Override
     public void syncExternalCharacters() {
         ApiResponseDto apiResponseDto = httpClient.get(API_URL_CHARACTERS, ApiResponseDto.class);
