@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -20,12 +21,14 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
 class MovieCharacterServiceImplTest {
-    private MovieCharacterMapper movieCharacterMapper = new MovieCharacterMapper();
     @InjectMocks
     private MovieCharacterServiceImpl movieCharacterService;
 
     @Mock
     private MovieCharacterRepository repository;
+
+    @Mock
+    private MovieCharacterMapper movieCharacterMapper;
 
     @Test
     void shouldSaveDtoToDb_Ok() {
@@ -39,6 +42,7 @@ class MovieCharacterServiceImplTest {
         commanderRick.setName("Commander Rick");
         commanderRick.setGender("MALE");
         commanderRick.setStatus("DEAD");
+
         ApiResponseDto apiResponseDto = new ApiResponseDto();
         apiResponseDto.setInfo(null);
         apiResponseDto.setResults(new ApiCharacterDto[] {summerSmith, commanderRick});
@@ -47,17 +51,12 @@ class MovieCharacterServiceImplTest {
         externalIds.add(summerSmith.getId());
         externalIds.add(commanderRick.getId());
 
-        //Set.of(summerSmith.getId(), commanderRick.getId());
-
         MovieCharacter summerSmithFromDb = new MovieCharacter();
-        //summerSmithFromDb.setId(1L);
         summerSmithFromDb.setExternalId(summerSmith.getId());
         summerSmithFromDb.setName(summerSmith.getName());
         summerSmithFromDb.setGender(Gender.valueOf(summerSmith.getGender()));
         summerSmithFromDb.setStatus(Status.valueOf(summerSmith.getStatus()));
-
         MovieCharacter commanderRickFromDb = new MovieCharacter();
-        //commanderRickFromDb.setId(2L);
         commanderRickFromDb.setExternalId(commanderRick.getId());
         commanderRickFromDb.setName(commanderRick.getName());
         commanderRickFromDb.setGender(Gender.valueOf(commanderRick.getGender()));
@@ -66,10 +65,14 @@ class MovieCharacterServiceImplTest {
         List<MovieCharacter> charactersToSave = List.of(summerSmithFromDb, commanderRickFromDb);
         List<MovieCharacter> expected = List.of(summerSmithFromDb);
 
-        List<MovieCharacter> empty = new ArrayList<>();
-        Mockito.when(repository.findAllByExternalIdIn(externalIds)).thenReturn(empty);
+        Mockito.when(repository.findAllByExternalIdIn(externalIds)).thenReturn(new ArrayList<>());
         Mockito.when(repository.saveAll(charactersToSave)).thenReturn(expected);
+        Mockito.when(movieCharacterMapper.parseApiCharacterResponseDto(summerSmith)).thenReturn(summerSmithFromDb);
+        Mockito.when(movieCharacterMapper.parseApiCharacterResponseDto(commanderRick)).thenReturn(commanderRickFromDb);
 
         List<MovieCharacter> actual = movieCharacterService.saveDtoToDb(apiResponseDto);
+
+        Assertions.assertNotNull(actual);
+        Assertions.assertEquals(expected, actual);
     }
 }
