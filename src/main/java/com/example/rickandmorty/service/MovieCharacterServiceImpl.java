@@ -33,7 +33,7 @@ public class MovieCharacterServiceImpl implements MovieCharacterService {
 
     public MovieCharacter getRandomCharacter() {
         long countOfCharacters = repository.count();
-        long randomId = (long) Math.floor(Math.random() * (countOfCharacters - 1 + 1) + 1);
+        long randomId = (long) Math.floor(Math.random() * (countOfCharacters) + 1);
         return repository.findById(randomId).get();
     }
 
