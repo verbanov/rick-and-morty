@@ -3,8 +3,8 @@ package com.example.rickandmorty.service;
 import com.example.rickandmorty.model.Gender;
 import com.example.rickandmorty.model.MovieCharacter;
 import com.example.rickandmorty.model.Status;
-import com.example.rickandmorty.model.dto.external.ApiCharacterDto;
-import com.example.rickandmorty.model.dto.external.ApiResponseDto;
+import com.example.rickandmorty.model.dto.external.ExternalCharacterDto;
+import com.example.rickandmorty.model.dto.external.ExternalResponseDto;
 import com.example.rickandmorty.model.dto.mapper.MovieCharacterMapper;
 import com.example.rickandmorty.repository.MovieCharacterRepository;
 import java.util.ArrayList;
@@ -32,20 +32,20 @@ class MovieCharacterServiceImplTest {
 
     @Test
     void shouldSaveDtoToDb_Ok() {
-        ApiCharacterDto summerSmith = new ApiCharacterDto();
+        ExternalCharacterDto summerSmith = new ExternalCharacterDto();
         summerSmith.setId(3L);
         summerSmith.setName("Summer Smith");
         summerSmith.setGender("FEMALE");
         summerSmith.setStatus("ALIVE");
-        ApiCharacterDto commanderRick = new ApiCharacterDto();
+        ExternalCharacterDto commanderRick = new ExternalCharacterDto();
         commanderRick.setId(69L);
         commanderRick.setName("Commander Rick");
         commanderRick.setGender("MALE");
         commanderRick.setStatus("DEAD");
 
-        ApiResponseDto apiResponseDto = new ApiResponseDto();
-        apiResponseDto.setInfo(null);
-        apiResponseDto.setResults(new ApiCharacterDto[] {summerSmith, commanderRick});
+        ExternalResponseDto externalResponseDto = new ExternalResponseDto();
+        externalResponseDto.setInfo(null);
+        externalResponseDto.setResults(new ExternalCharacterDto[] {summerSmith, commanderRick});
 
         Set<Long> externalIds = new HashSet<>();
         externalIds.add(summerSmith.getId());
@@ -70,7 +70,7 @@ class MovieCharacterServiceImplTest {
         Mockito.when(movieCharacterMapper.parseApiCharacterResponseDto(summerSmith)).thenReturn(summerSmithFromDb);
         Mockito.when(movieCharacterMapper.parseApiCharacterResponseDto(commanderRick)).thenReturn(commanderRickFromDb);
 
-        List<MovieCharacter> actual = movieCharacterService.saveDtoToDb(apiResponseDto);
+        List<MovieCharacter> actual = movieCharacterService.saveDtoToDb(externalResponseDto);
 
         Assertions.assertNotNull(actual);
         Assertions.assertEquals(expected, actual);
