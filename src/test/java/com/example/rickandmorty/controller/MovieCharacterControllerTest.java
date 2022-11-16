@@ -31,7 +31,7 @@ class MovieCharacterControllerTest {
     private MockMvc mockMvc;
 
     @BeforeEach
-    void serUp() {
+    void setUp() {
         RestAssuredMockMvc.mockMvc(mockMvc);
     }
 

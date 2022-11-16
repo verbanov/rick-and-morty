@@ -1,8 +1,8 @@
 package com.example.rickandmorty.service;
 
 import com.example.rickandmorty.model.MovieCharacter;
-import com.example.rickandmorty.model.dto.external.ApiCharacterDto;
-import com.example.rickandmorty.model.dto.external.ApiResponseDto;
+import com.example.rickandmorty.model.dto.external.ExternalCharacterDto;
+import com.example.rickandmorty.model.dto.external.ExternalResponseDto;
 import com.example.rickandmorty.model.dto.mapper.MovieCharacterMapper;
 import com.example.rickandmorty.repository.MovieCharacterRepository;
 import java.util.Arrays;
@@ -40,22 +40,22 @@ public class MovieCharacterServiceImpl implements MovieCharacterService {
         return repository.findAllByNameContains(string);
     }
 
-    @Scheduled(cron = "0 */1 * * * *")
+    @Scheduled(cron = "0 */2 * * * *")
     @Override
     public void syncExternalCharacters() {
-        ApiResponseDto apiResponseDto = httpClient.get(API_URL_CHARACTERS, ApiResponseDto.class);
-        saveDtoToDb(apiResponseDto);
-        while (apiResponseDto.getInfo().getNext() != null) {
-            apiResponseDto = httpClient.get(apiResponseDto
+        ExternalResponseDto externalResponseDto = httpClient.get(API_URL_CHARACTERS, ExternalResponseDto.class);
+        saveDtoToDb(externalResponseDto);
+        while (externalResponseDto.getInfo().getNext() != null) {
+            externalResponseDto = httpClient.get(externalResponseDto
                     .getInfo()
-                    .getNext(),ApiResponseDto.class);
-            saveDtoToDb(apiResponseDto);
+                    .getNext(), ExternalResponseDto.class);
+            saveDtoToDb(externalResponseDto);
         }
     }
 
-    List<MovieCharacter> saveDtoToDb(ApiResponseDto apiResponseDto) {
-        Map<Long, ApiCharacterDto> externalDtos = Arrays.stream(apiResponseDto.getResults())
-                .collect(Collectors.toMap(ApiCharacterDto::getId, Function.identity()));
+    List<MovieCharacter> saveDtoToDb(ExternalResponseDto externalResponseDto) {
+        Map<Long, ExternalCharacterDto> externalDtos = Arrays.stream(externalResponseDto.getResults())
+                .collect(Collectors.toMap(ExternalCharacterDto::getId, Function.identity()));
 
         Set<Long> externalIds = externalDtos.keySet();
 

@@ -3,7 +3,7 @@ package com.example.rickandmorty.model.dto.external;
 import lombok.Data;
 
 @Data
-public class ApiCharacterDto {
+public class ExternalCharacterDto {
     private Long id;
     private String name;
     private String status;

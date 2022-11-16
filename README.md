@@ -1,16 +1,14 @@
 # ****Rick-and-morty**** #
 
 ## 🚀 Quickstart
-1. Fork this repository
-2. Copy link of project
-3. Create new project from Version Control
-4. Download image with Postgres 15-Alpine from Docker
+1. Clone repository
+2. Download image with Postgres 15-Alpine from Docker
 'docker pull postgres:15-alpine'
 
-5. Download image with Project Rick and Morty from Docker
+3. Download image with Project Rick and Morty from Docker
 'docker pull verbanov/rick-and-morty'
 
-8. Run project
+4. Run project
 'docker-compose up'
 
 ## 🚀 Features

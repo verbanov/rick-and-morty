@@ -4,12 +4,12 @@ import com.example.rickandmorty.model.Gender;
 import com.example.rickandmorty.model.MovieCharacter;
 import com.example.rickandmorty.model.Status;
 import com.example.rickandmorty.model.dto.MovieCharacterResponseDto;
-import com.example.rickandmorty.model.dto.external.ApiCharacterDto;
+import com.example.rickandmorty.model.dto.external.ExternalCharacterDto;
 import org.springframework.stereotype.Component;
 
 @Component
 public class MovieCharacterMapper {
-    public MovieCharacter parseApiCharacterResponseDto(ApiCharacterDto characterDto) {
+    public MovieCharacter parseApiCharacterResponseDto(ExternalCharacterDto characterDto) {
         MovieCharacter movieCharacter = new MovieCharacter();
         movieCharacter.setExternalId(characterDto.getId());
         movieCharacter.setName(characterDto.getName());
