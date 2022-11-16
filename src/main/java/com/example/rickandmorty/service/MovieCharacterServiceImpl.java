@@ -11,12 +11,14 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 @Service
 public class MovieCharacterServiceImpl implements MovieCharacterService {
-    private static final String API_URL_CHARACTERS = "https://rickandmortyapi.com/api/character";
+    @Value("${external_api_url_characters}")
+    private String apiUrlCharacters;
     private final MovieCharacterRepository repository;
     private final HttpClient httpClient;
     private final MovieCharacterMapper movieCharacterMapper;
@@ -43,7 +45,8 @@ public class MovieCharacterServiceImpl implements MovieCharacterService {
     @Scheduled(cron = "0 */2 * * * *")
     @Override
     public void syncExternalCharacters() {
-        ExternalResponseDto externalResponseDto = httpClient.get(API_URL_CHARACTERS, ExternalResponseDto.class);
+        ExternalResponseDto externalResponseDto =
+                httpClient.get(apiUrlCharacters, ExternalResponseDto.class);
         saveDtoToDb(externalResponseDto);
         while (externalResponseDto.getInfo().getNext() != null) {
             externalResponseDto = httpClient.get(externalResponseDto
@@ -54,7 +57,8 @@ public class MovieCharacterServiceImpl implements MovieCharacterService {
     }
 
     List<MovieCharacter> saveDtoToDb(ExternalResponseDto externalResponseDto) {
-        Map<Long, ExternalCharacterDto> externalDtos = Arrays.stream(externalResponseDto.getResults())
+        Map<Long, ExternalCharacterDto> externalDtos =
+                Arrays.stream(externalResponseDto.getResults())
                 .collect(Collectors.toMap(ExternalCharacterDto::getId, Function.identity()));
 
         Set<Long> externalIds = externalDtos.keySet();
