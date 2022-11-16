@@ -22,8 +22,8 @@ public class MovieCharacterMapper {
         MovieCharacterResponseDto movieCharacterResponseDto = new MovieCharacterResponseDto();
         movieCharacterResponseDto.setId(movieCharacter.getExternalId());
         movieCharacterResponseDto.setName(movieCharacter.getName());
-        movieCharacterResponseDto.setGender(movieCharacter.getGender().name());
-        movieCharacterResponseDto.setStatus(movieCharacter.getStatus().name());
+        movieCharacterResponseDto.setGender(movieCharacter.getGender());
+        movieCharacterResponseDto.setStatus(movieCharacter.getStatus());
         return movieCharacterResponseDto;
     }
 }

@@ -13,7 +13,8 @@
 
 ## 🚀 Features
 1. Synchronization from API every minute
-2. Use port:8081 for requests and port:5433 for database
+2. Use port:8081 for requests and port:5433 for database (for docker)
+   Use port:8080 for requests and port:5432 for database (without docker)
 ``` Get random character from the database
     GET: /characters/random
     Example: Example: http://localhost:8081/characters/random
